@@ -1,0 +1,8 @@
+CREATE TABLE [TABL] (
+  [BL] LONG,
+  [TEAM] TEXT(255),
+  [SP] LONG,
+  [TOR] LONG,
+  [DIF] LONG,
+  [PTS] LONG
+);
