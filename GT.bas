@@ -67,25 +67,15 @@ Dim RST As DAO.Recordset
   
 GL.envi
 
-'If DBUG("GT.write2git") Then Stop
-
 Call GT.calculateIDX
-
-' IDX00053
 
 SQL = "SELECT TXT FROM SETT WHERE LUP = 'GIT Repository'"
 REPO = CStr(SQ.sel(SQL))
 
 If Not FSO.FolderExists(REPO) Then Exit Sub
 
-' IDX00039 check, if GIT  table has new code
-
 dum = SQ.sel("SELECT COUNT(0) FROM GIT WHERE VRS = 0 AND CPL = TRUE")
 If dum = 0 Then Exit Sub
-
-' GL.lb "Writing to GIT"
-
-' IDX00008
 
 SQL = "SELECT DAT FROM SETT WHERE LUP = 'GIT Repository'"
 dum = SQ.sel(SQL)
@@ -96,27 +86,17 @@ If gitDT > Date Then gitDT = Date
 SQL = "UPDATE SETT SET DAT = NOW(), NUM = " & VRSI & " WHERE LUP = 'GIT Repository'"
 dum = SQ.UPD(SQL)
 
-' IDX00041
-
 SQL = "UPDATE GIT SET VRS=0 WHERE Int(DAT) = Int(Now())"
 dum = SQ.UPD(SQL)
 
-' IDX00042
-
 tmp = REPO & "dummy.txt"
-
-' IDX00072 - die Zeitstempel sind nicht wie erwartet
 
 Set RST = CurrentDb.OpenRecordset("SYSINFO", dbOpenSnapshot)
 
 Do While Not RST.EOF
 
-    'If DBUG("GT.write2git:SYSINFO") Then Stop
-
     MDL = RST!Name
     
-' IDX00007
-
     Select Case RST!Type.Value
     Case -32761: tip = acModule
     Case -32764: tip = acReport
@@ -130,12 +110,12 @@ Do While Not RST.EOF
     Application.SaveAsText tip, MDL, tmp
         
     If tip <> acModule Then
-        ' Forms und Reports werden mit UTF-16 geschrieben und hier in ANSI umgewandelt.
-        ' Lesen Access-Format (UTF-16)
+        
+        Stop
+        
         tmpCode = FSO.OpenTextFile(tmp, ForReading, False, -1).ReadAll()
         
         If InStr(tmpCode, "Option Compare Database") Then
-            ' IDX00034 Split frm und rpt
             v = Split(tmpCode, "Option Compare Database")
             v(1) = "Option Compare Database" & v(1)
             If FSO.FileExists(tmp) Then FSO.DeleteFile tmp, True
@@ -213,7 +193,7 @@ Set exec = shell.exec(gitCmd)
 result = exec.StdOut.ReadAll & exec.StdErr.ReadAll
 
 If Len(result) Then
-    ' GL.lb result
+    MsgBox result
 End If
 
 Set exec = Nothing
@@ -222,8 +202,7 @@ Set shell = Nothing
 End Sub
 
 Sub savecompare(tmp As String, BAS As String, MDL As String, Optional SETT As String = "")
-' IDX00009 - modulize compare and write from write2git
-' IDX00090 - add optional parameter SETT for tabel and query
+
 Dim strCode As String
 Dim tmpCode As String
 Dim such As String
@@ -232,11 +211,9 @@ Dim i As Long
 Dim SQL As String
 Dim RST As DAO.Recordset
 
-'If DBUG("GT.savecompare") Then Stop
-
 tmpCode = FSO.OpenTextFile(tmp, ForReading).ReadAll()
 
-If FSO.FileExists(BAS) Then ' IDX00043
+If FSO.FileExists(BAS) Then
     strCode = FSO.OpenTextFile(BAS, ForReading).ReadAll()
     
     If strCode = tmpCode Then
@@ -267,8 +244,8 @@ If FSO.FileExists(tmp) Then
             i = DLookup("max(IDX)", "GIT", "IDX < 99999") + 1
             
             SQL = "INSERT INTO GIT (IDX, VRS, MDL, DAT, DSC, CPL, SUB"
-            SQL = SQL & ") VALUES (" & i & ", 280, '" & MDL & "'"
-            SQL = SQL & ", #1/1/1900#, 'added by GT.savecompare', true, '" & SETT & "'"
+            SQL = SQL & ") VALUES (" & i & ", 0, '" & MDL & "'"
+            SQL = SQL & ", #1/1/1900#, 'Init', true, '" & SETT & "'"
             SQL = SQL & ")"
             
             dum = SQ.UPD(SQL)
@@ -372,11 +349,15 @@ Do While Not RST.EOF
     Else
         tmp = RST!MDL & RST!Sub
     End If
-
-    If Val(RST!LIN) < 1 Then ' IDX00006
+    
+    If IsNull(RST!LIN) Then
         FST.WriteLine "| " & Pad(RST!IDX, -5) & " | " & Pad(tmp, wMdl) & " | " & Pad(" ", wLin) & " | " & Pad(RST!DSC, wDsc) & " |"
     Else
-        FST.WriteLine "| " & Pad(RST!IDX, -5) & " | " & Pad(tmp, wMdl) & " | " & Pad(RST!LIN, wLin) & " | " & Pad(RST!DSC, wDsc) & " |"
+        If Val(RST!LIN) < 1 Then ' IDX00006
+            FST.WriteLine "| " & Pad(RST!IDX, -5) & " | " & Pad(tmp, wMdl) & " | " & Pad(" ", wLin) & " | " & Pad(RST!DSC, wDsc) & " |"
+        Else
+            FST.WriteLine "| " & Pad(RST!IDX, -5) & " | " & Pad(tmp, wMdl) & " | " & Pad(RST!LIN, wLin) & " | " & Pad(RST!DSC, wDsc) & " |"
+        End If
     End If
     
 RST.MoveNext: Loop: RST.Close: Set RST = Nothing
