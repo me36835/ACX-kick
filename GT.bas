@@ -49,7 +49,7 @@ MsgBox "Fertig"
 
 End Sub
 
-Sub write2git() ' IDX00052
+Sub write2git() ' $00:00001
 
 Dim obj As Object 'Deklariere obj als Object
 Dim tmpCode As String
@@ -279,7 +279,7 @@ If FSO.FileExists(tmp) Then
 
         Do While Not RST.EOF
             
-            such = "IDX" & Format(RST!IDX, "00000")
+            such = IDX & Format(RST!IDX, "00000")
             
             v() = Split(tmpCode & such, such)
             

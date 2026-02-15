@@ -1,5 +1,5 @@
 # Changelog
-Generiert am: 15.02.2026 17:27:43
+Generiert am: 15.02.2026 17:41:39
 
 ## Version 1 Date: 15-Feb-2026
 
@@ -7,8 +7,8 @@ Generiert am: 15.02.2026 17:27:43
 | ----- | ------------------------- | ----- | ------------------------------------------------------------ |
 |     1 | CB                        |       | Init                                                         |
 |     2 | GL                        |       | Init                                                         |
-|    12 | GT.write2git              |       | Umstellen auf $00:                                           |
-|     3 | GT                        |   178 | Init                                                         |
+| 99999 | GT.savecompare            |       | Umstellen auf $00:                                           |
+|     3 | GT                        |       | Init                                                         |
 |     9 | MAIN                      |       | Init                                                         |
 |     4 | MN                        |       | Init                                                         |
 |     5 | PB                        |       | Init                                                         |
