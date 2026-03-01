@@ -34,7 +34,7 @@ GL.envi
 
 Call GT.calculateIDX
 
-dum = SQ.UPD("UPDATE GIT SET VRS = 0 WHERE VRS = " & VRSI)
+dum = SQ.UPD("UPDATE GIT SET VRS = 0")
 
 VR.AlleFormulareSpeichern
 VR.AlleModuleSpeichern
@@ -110,8 +110,6 @@ Do While Not RST.EOF
     Application.SaveAsText tip, MDL, tmp
         
     If tip <> acModule Then
-        
-        Stop
         
         tmpCode = FSO.OpenTextFile(tmp, ForReading, False, -1).ReadAll()
         
@@ -279,6 +277,8 @@ If FSO.FileExists(tmp) Then
 
 
         Do While Not RST.EOF
+        
+            Stop
             
             such = IDX & Format(RST!IDX, "00000")
             
@@ -343,7 +343,7 @@ Do While Not RST.EOF
         FST.WriteLine "| ----- | " & String(wMdl, "-") & " | " & String(Abs(wLin), "-") & " | " & String(Abs(wDsc), "-") & " |"
     End If
             
-' IDX00005
+Stop
 
     If Len(RST!MDL) * Len(RST!Sub) Then
         tmp = RST!MDL & "." & RST!Sub
