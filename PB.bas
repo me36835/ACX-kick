@@ -13,7 +13,7 @@ Public v As Variant
 
 Public DB As Database
 
-Sub initialize()
+Sub initialize() ' $00:00005
 
 If DB Is Nothing Then Set DB = CurrentDb
 

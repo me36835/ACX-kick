@@ -2,6 +2,8 @@ Option Compare Database
 Option Explicit
 
 Function GetHtml(ByVal URL As String) As MSHTML.HTMLDocument
+' $00:00008
+    
     Dim xhr As MSXML2.XMLHTTP60
     Dim html As MSHTML.HTMLDocument
     Set xhr = New MSXML2.XMLHTTP60

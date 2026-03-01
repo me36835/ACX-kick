@@ -43,13 +43,13 @@ GT.write2git
 GT.temporary
 
 ' IDX00075 switch DEBUGS off
-dum = SQ.UPD("UPDATE SET SETT NUM = 0 WHERE GRP = 'DEBUGS' AND TXT LIKE 'GT.*'")
+' dum = SQ.UPD("UPDATE SET SETT NUM = 0 WHERE GRP = 'DEBUGS' AND TXT LIKE 'GT.*'")
 
 MsgBox "Fertig"
 
 End Sub
 
-Sub write2git() ' $00:00001
+Sub write2git() ' $00:00003
 
 Dim obj As Object 'Deklariere obj als Object
 Dim tmpCode As String
@@ -202,6 +202,7 @@ Set shell = Nothing
 End Sub
 
 Sub savecompare(tmp As String, BAS As String, MDL As String, Optional SETT As String = "")
+'  $00:00012
 
 Dim strCode As String
 Dim tmpCode As String

@@ -1,7 +1,7 @@
 Option Compare Database
 Option Explicit
 
-Sub start()
+Sub start() ' $00:00004
 Dim URL As String
 Dim DML As MSHTML.HTMLDocument
 Dim tblAll As MSHTML.IHTMLElementCollection

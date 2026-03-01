@@ -1,7 +1,7 @@
 Option Compare Database
 Option Explicit
 
-Sub distriNew()
+Sub distriNew() ' $00:00007
 Dim RST As DAO.Recordset
 Dim tmp As String
 Dim htm As String

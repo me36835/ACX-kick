@@ -30,7 +30,7 @@ Private Sub Beispiel()
     Call StringToClipboard("Hallo ...")
 End Sub
 
-Public Sub StringToClipboard(strText As String)
+Public Sub StringToClipboard(strText As String) ' $00:00001
     #If VBA7 Then
         Dim lngIdentifier As LongPtr, lngPointer As LongPtr
     #Else

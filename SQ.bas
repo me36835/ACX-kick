@@ -17,7 +17,7 @@ c = DB.RecordsAffected
 End Function
 
 
-Function sel(SQL As String) As Variant
+Function sel(SQL As String) As Variant ' $00:00006
 Dim RST As DAO.Recordset
 
 Set RST = SQ.RQS(SQL)
