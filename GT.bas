@@ -342,8 +342,6 @@ Do While Not RST.EOF
         FST.WriteLine "| Index | " & Pad("Modul.Prozedur", wMdl) & " | " & Pad("Zeile", Abs(wLin)) & " | " & Pad("Beschreibung", wDsc) & " |"
         FST.WriteLine "| ----- | " & String(wMdl, "-") & " | " & String(Abs(wLin), "-") & " | " & String(Abs(wDsc), "-") & " |"
     End If
-            
-Stop
 
     If Len(RST!MDL) * Len(RST!Sub) Then
         tmp = RST!MDL & "." & RST!Sub
